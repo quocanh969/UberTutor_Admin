@@ -18,6 +18,8 @@ export default class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
+    
+
     handleChange(e)
     {
         this.user[e.target.name] = e.target.value;
@@ -49,9 +51,9 @@ export default class Login extends Component {
         else if( loading === true)
         {
             return(
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="sr-only">Loading...</span>
+                <div className="d-flex justify-content-center">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="sr-only">Loading...</span>
                     </div>
                 </div>
             );
@@ -78,6 +80,7 @@ export default class Login extends Component {
                                                 <div className="text-center">
                                                     <h1 className="h4 text-gray-900 mb-4">ADMIN LOGIN</h1>
                                                 </div>
+                                                {this.generateNotice()}
                                                 <form className="user" onSubmit={this.handleSubmit}>
                                                     <div className="form-group">
                                                         <input type="text" 
@@ -96,8 +99,7 @@ export default class Login extends Component {
                                                                 placeholder="Password" 
                                                                 onChange={this.handleChange}
                                                         />
-                                                    </div>
-                                                    {this.generateNotice()}
+                                                    </div>                                                    
                                                     <button className="btn btn-primary btn-user btn-block mt-5 font-weight-bold font-20" type="submit">
                                                         Login
                                                     </button>

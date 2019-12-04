@@ -13,6 +13,11 @@ const mapDispatchToProps = dispatch => {
         onLogin: user => {            
             dispatch(ActionLogIn(user));
         },
+        onRefreshLogin: () => {
+            dispatch({
+                type:'REFRESH_LOGIN',
+            });
+        },
     }
 }
 

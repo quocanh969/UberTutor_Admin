@@ -3,6 +3,7 @@ const ApiUrl = "http://localhost:8080";
 
 export const us = {
     login,
+    register,
 }
 
 
@@ -24,6 +25,18 @@ function login(user) {
         });
 }
 
+function register(user) {
+    user.name = user.username;
+
+    const requestOption = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user),
+    };
+
+    return fetch(`${ApiUrl}/register`, requestOption)
+        .then(handleResponse);
+}
 
 function handleResponse(response) {
     return response.text().then(text => {

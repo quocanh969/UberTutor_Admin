@@ -5,13 +5,13 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     return (
         <Route {...rest} render={
             (props) => {
-                let user = localStorage.getItem('user');
+                let user = JSON.parse(localStorage.getItem('user'));
                 /*
                 let setupTime = localStorage.getItem('setTimeLogIn');
                 let now = new Date().getTime();
                 */
                 //if (user && user.user !== false && setupTime - now < 6 * 60 * 60 * 1000) {
-                if (user) {
+                if (user && user.user !== false) {
                     return (
                         <Component {...props}></Component>
                     );

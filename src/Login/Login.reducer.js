@@ -27,6 +27,8 @@ const LoginReducer = (state = initState, action) => {
                 message: action.message,
                 loading: false,
             };
+        case 'REFRESH_LOGIN':
+            return initState;
         default:
             return state
     }
