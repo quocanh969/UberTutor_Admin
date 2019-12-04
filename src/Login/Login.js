@@ -4,6 +4,64 @@ import { NavLink } from 'react-router-dom'
 
 
 export default class Login extends Component {
+
+    user = {
+        username: '',
+        password: '',
+    }
+
+    constructor(props)
+    {
+        super(props);
+
+        this.handleSubmit = this.handleSubmit.bind(this); // handle submit
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e)
+    {
+        this.user[e.target.name] = e.target.value;
+    }
+
+    handleSubmit(e)
+    {
+        e.preventDefault();
+        
+        console.log(this.user);
+
+        let { onLogin } = this.props;
+        onLogin(this.user);
+        
+    }
+
+    generateNotice()
+    {
+        let { status, message, loading } = this.props.LoginReducer;
+
+        if(status === -1)
+        {// Thất bại
+            return(
+                <div className="alert alert-danger mb-3">
+                    {message}
+                </div>
+            );
+        }
+        else if( loading === true)
+        {
+            return(
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            );
+        }
+        else
+        {
+            return ;
+        }
+    }
+
     render() {
         return (
             <div>
@@ -20,21 +78,31 @@ export default class Login extends Component {
                                                 <div className="text-center">
                                                     <h1 className="h4 text-gray-900 mb-4">ADMIN LOGIN</h1>
                                                 </div>
-                                                <form className="user">
+                                                <form className="user" onSubmit={this.handleSubmit}>
                                                     <div className="form-group">
-                                                        <input type="email" className="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username" />
+                                                        <input type="text" 
+                                                                className="form-control form-control-user" 
+                                                                id="username" 
+                                                                name="username"
+                                                                placeholder="Username" 
+                                                                onChange={this.handleChange}
+                                                        />
                                                     </div>
                                                     <div className="form-group">
-                                                        <input type="password" className="form-control form-control-user" id="exampleInputPassword" placeholder="Password" />
+                                                        <input type="password" 
+                                                                className="form-control form-control-user" 
+                                                                name="password"
+                                                                id="password" 
+                                                                placeholder="Password" 
+                                                                onChange={this.handleChange}
+                                                        />
                                                     </div>
-                                                    <a href="index.html" className="btn btn-primary btn-user btn-block mt-5 font-weight-bold font-20">
+                                                    {this.generateNotice()}
+                                                    <button className="btn btn-primary btn-user btn-block mt-5 font-weight-bold font-20" type="submit">
                                                         Login
-                                                    </a>
+                                                    </button>
                                                 </form>
                                                 <hr />
-                                                <div className="text-center">
-                                                    <a className="small" href="forgot-password.html">Forgot Password?</a>
-                                                </div>
                                                 <div className="text-center">
                                                     <NavLink className="small" to="/register">Create an Account!</NavLink>
                                                 </div>

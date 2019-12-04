@@ -1,24 +1,26 @@
 import React from 'react';
 import './App.css';
 
-import { BrowserRouter, Switch,Route, Redirect } from 'react-router-dom';
+import { Router, Switch,Route, Redirect } from 'react-router-dom';
 import LoginContainer from './Login/Login.container';
 import RegisterContainer from './Register/Register.container';
 import DashboardContainer from './Dashboard/Dashboard.container';
 
-import { PrivateRoute } from './Routes/PrivateRoute';
+import { PrivateRoute, LoginRoute } from './Routes/PrivateRoute';
+
+import { history } from './Helpers/History';
 
 function App() {
   return (
     <div>
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
-          <Route path="/login" exact component={LoginContainer}></Route>  
+          <LoginRoute path="/login" exact component={LoginContainer}></LoginRoute>  
           <Route path="/register" exact component={RegisterContainer}></Route> 
           <PrivateRoute path="/dashboard" exact component={DashboardContainer}></PrivateRoute> 
           <Redirect to='/login' />        
         </Switch>
-      </BrowserRouter>
+      </Router>
     </div>
   );
 }
