@@ -104,7 +104,7 @@ class Register extends Component {
                                                 <div className="text-center">
                                                     <h1 className="h4 text-gray-900 mb-4">Create an Account for Admin!</h1>
                                                 </div>
-                                                {this.generateNotice()}
+                                                
                                                 <form ref="registerForm" className="user" onSubmit={this.handleSubmit}>
                                                     <div className="form-group">
                                                         <input type="text" required onChange={this.handleChange} className="form-control form-control-user" id="name" name="name" placeholder="Name" />
@@ -142,6 +142,7 @@ class Register extends Component {
                                                             <option value={1}>Female</option>
                                                         </select>
                                                     </div>
+                                                    {this.generateNotice()}
                                                     <button type="submit" className="btn btn-primary btn-user btn-block font-weight-bold font-20">
                                                         Register Account
                                                     </button>

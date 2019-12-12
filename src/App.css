@@ -17,3 +17,21 @@ body{
   color: #6e707e;
   border: 1px solid #d1d3e2;
 }
+
+.font-weight-700
+{
+  font-weight: 700;
+}
+
+.w-auto
+{
+  width: auto !important;
+}
+
+table tr:hover{
+  background-color: #fcefe3;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}

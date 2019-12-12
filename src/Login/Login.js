@@ -80,7 +80,7 @@ export default class Login extends Component {
                                                 <div className="text-center">
                                                     <h1 className="h4 text-gray-900 mb-4">ADMIN LOGIN</h1>
                                                 </div>
-                                                {this.generateNotice()}
+                                               
                                                 <form className="user" onSubmit={this.handleSubmit}>
                                                     <div className="form-group">
                                                         <input type="text" 
@@ -99,7 +99,8 @@ export default class Login extends Component {
                                                                 placeholder="Password" 
                                                                 onChange={this.handleChange}
                                                         />
-                                                    </div>                                                    
+                                                    </div>  
+                                                    {this.generateNotice()}                                                   
                                                     <button className="btn btn-primary btn-user btn-block mt-5 font-weight-bold font-20" type="submit">
                                                         Login
                                                     </button>

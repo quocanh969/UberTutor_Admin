@@ -1,7 +1,9 @@
 import React from 'react';
 import './App.css';
+import './style.css';
 
-import { Router, Switch,Route, Redirect } from 'react-router-dom';
+
+import {BrowserRouter, Router, Switch,Route, Redirect, Link } from 'react-router-dom';
 import LoginContainer from './Login/Login.container';
 import RegisterContainer from './Register/Register.container';
 import DashboardContainer from './Dashboard/Dashboard.container';
@@ -9,16 +11,17 @@ import DashboardContainer from './Dashboard/Dashboard.container';
 import { PrivateRoute, LoginRoute } from './Routes/PrivateRoute';
 
 import { history } from './Helpers/History';
+import Dashboard from './Dashboard/Dashboard';
 
 function App() {
   return (
     <div>
-      <Router history={history}>
+      <Router history={history}> 
         <Switch>
-          <LoginRoute path="/login" exact component={LoginContainer}></LoginRoute>  
-          <Route path="/register" exact component={RegisterContainer}></Route> 
-          <PrivateRoute path="/dashboard" exact component={DashboardContainer}></PrivateRoute> 
-          <Redirect to='/login' />        
+          <Route path='/dashboard' component={DashboardContainer}></Route>
+          <Route path='/login' component={LoginContainer}></Route>
+          <Route path='/register' component={RegisterContainer}></Route>
+          <Redirect to='/login'></Redirect>
         </Switch>
       </Router>
     </div>
