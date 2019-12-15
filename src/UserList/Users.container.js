@@ -10,8 +10,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLoadData:queryOption=>{
-            dispatch(LoadData(queryOption));
+        onLoadData:(id,queryOption)=>{
+            dispatch(LoadData(id,queryOption));
         },
     }
 }

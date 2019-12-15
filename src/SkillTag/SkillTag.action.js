@@ -2,28 +2,35 @@ import { us } from '../Services/UserServices';
 import { history } from '../Helpers/History';
 import { delay } from 'q';
 
-export const LoadData = (queryOption) => {
+export const LoadData = (id, queryOption) => {
     return dispatch => {
-        //dispatch(request(queryOption));
-        /*
-        us.loadUserData(user)
+        dispatch(request());
+        let option = {
+            id: id,
+            queryOption: queryOption,
+        }
+        us.loadSkillTag(option)
             .then(
                 (res) => {
-                    dispatch(success(res));
+                    let infoRes = res.info;
+                    console.log(res);
+                    // Update token for local storage
+                    let user = JSON.parse(localStorage.getItem('user'));
+                    console.log(user);
+                    //user.token = infoRes.token;
+                    //localStorage.setItem('user', user);
+
+                    dispatch(success(infoRes.data));
                 },
                 (error) => {
                     dispatch(failure('Can not connect to server'));
                 }
             );
-            */
-        let res = us.loadSkillTag(queryOption);    
-        dispatch(success(res));
     };
 
-    function request(user) {
+    function request() {
         return {
             type: 'LOAD_SKILL_TAG_REQUEST',
-            user,
         }
     }
     function success(data) {

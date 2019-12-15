@@ -83,16 +83,18 @@ export default class Login extends Component {
                                                
                                                 <form className="user" onSubmit={this.handleSubmit}>
                                                     <div className="form-group">
-                                                        <input type="text" 
+                                                        <input type="email" 
+                                                                required
                                                                 className="form-control form-control-user" 
                                                                 id="username" 
                                                                 name="username"
-                                                                placeholder="Username" 
+                                                                placeholder="Email" 
                                                                 onChange={this.handleChange}
                                                         />
                                                     </div>
                                                     <div className="form-group">
                                                         <input type="password" 
+                                                                required
                                                                 className="form-control form-control-user" 
                                                                 name="password"
                                                                 id="password" 

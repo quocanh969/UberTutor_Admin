@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { Switch, Route, Redirect, useRouteMatch } from 'react-router-dom';
-import SkillTag from '../SkillTag/SkillTag';
+
 import MainDashboard from '../MainDashboard/MainDashboard';
 import UsersContainer from '../UserList/Users.container';
 import SkillTagsContainer from '../SkillTag/SkillTag.container';
+import DetailUser from '../UserList/DetailUser/DetailUser';
 
 export default class Dashboard extends Component {
 
@@ -196,9 +197,10 @@ export default class Dashboard extends Component {
                             </nav>
                             {/* End of Topbar */}
                             <Switch>
-                                <Route path="/dashboard/users" component={UsersContainer}></Route>
-                                <Route path="/dashboard/skill-tags" component={SkillTagsContainer}></Route>
-                                <Route path="/dashboard" component={MainDashboard}></Route>
+                                <Route path="/dashboard/users" exact component={UsersContainer}></Route>
+                                <Route path={`/dashboard/users/id=:id&role=:role`} exact component={DetailUser}></Route>
+                                <Route path="/dashboard/skill-tags" exact component={SkillTagsContainer}></Route>
+                                <Route path="/dashboard" exact component={MainDashboard}></Route>
                                 <Redirect to="/dashboard"></Redirect>
                             </Switch>
                         </div>

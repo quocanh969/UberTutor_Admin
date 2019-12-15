@@ -1,5 +1,6 @@
 const initState = {    
-    returnData:[],
+    userData:[],
+    tutorData:[],
     status: 0,
     message: '',
     loading: false,
@@ -10,23 +11,38 @@ const UsersReducer = (state = initState, action) => {
         case 'LOAD_USERS_REQUEST':
             return {
                 ...state,
-                returnData:[],
+                userData:[],
+                tutorData:[],
                 status: 0,
                 message: '',
                 loading: true,
             };
         case 'LOAD_USERS_SUCCESS':
-            return {
-                ...state,
-                returnData:action.data,
-                status: 1,
-                message: '',
-                loading: false,
-            };
+            if(action.role === 0)
+            {
+                return {
+                    ...state,
+                    userData:action.data,               
+                    status: 1,
+                    message: '',
+                    loading: false,
+                };
+            }
+            else
+            {
+                return {
+                    ...state,                  
+                    tutorData:action.data,
+                    status: 1,
+                    message: '',
+                    loading: false,
+                };
+            }            
         case 'LOAD_USERS_FAILURE':
             return {
                 ...state,
-                returnData:[],
+                userData:[],
+                tutorData:[],
                 status: -1,
                 message: action.message,
                 loading: false,

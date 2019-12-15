@@ -3,16 +3,19 @@ import React, { Component } from 'react'
 class SkillTag extends Component {
     constructor(props) {
         super(props);
-        this.generateSkillTagsData();
+        this.generateSkillTagsData("");
     }
 
     detailClick(id) {
         console.log("detail click: ",id);
     }
 
-    generateSkillTagsData() {
+    generateSkillTagsData(searchStr) {
         let { onLoadSkillTagsData } = this.props;
-        onLoadSkillTagsData(null);
+        let queryOption = {
+            searchStr,
+        }
+        onLoadSkillTagsData(JSON.parse(localStorage.getItem('user')).user.loginUser.id, queryOption);
     }
 
     generateContent() {

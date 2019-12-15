@@ -10,8 +10,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLoadSkillTagsData:queryOption=>{
-            dispatch(LoadData(queryOption));
+        onLoadSkillTagsData:(id,queryOption)=>{
+            dispatch(LoadData(id,queryOption));
         },
     }
 }
