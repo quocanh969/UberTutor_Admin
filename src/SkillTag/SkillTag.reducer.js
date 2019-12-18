@@ -31,6 +31,20 @@ const SkillTagsReducer = (state = initState, action) => {
                 message: action.message,
                 loading: false,
             };
+        case 'EDITTING_SKILL_TAG':
+            let temp = state.returnData;
+            if(temp[action.index].isEditting === 0)
+            {
+                temp[action.index].isEditting = 1;
+            }
+            else
+            {
+                temp[action.index].isEditting = 0;
+            }
+            return {
+                ...state,
+                returnData:temp,
+            };
         default:
             return state
     }

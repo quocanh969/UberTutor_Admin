@@ -13,6 +13,12 @@ const mapDispatchToProps = dispatch => {
         onLoadSkillTagsData:(id,queryOption)=>{
             dispatch(LoadData(id,queryOption));
         },
+        onEdittingSkillTag:index=>{
+            dispatch({
+                type: 'EDITTING_SKILL_TAG',
+                index: index,
+            })
+        },
     }
 }
 

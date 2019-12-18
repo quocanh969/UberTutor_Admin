@@ -1,0 +1,10 @@
+input {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 2px;;
+}
+  
+input:disabled {
+    background-color: transparent;
+    border-width: 0;
+}

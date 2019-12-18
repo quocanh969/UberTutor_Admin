@@ -1,14 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import './SkillTag.css';
 
 class SkillTag extends Component {
+    //skillTagData = [];
+    selectedElement = null;
     constructor(props) {
         super(props);
         this.generateSkillTagsData("");
+
+        this.handleSkillChange = this.handleSkillChange.bind(this);
     }
 
     detailClick(id) {
         console.log("detail click: ",id);
     }
+
+    // Thao tác table
+
+    selectedChange(e)
+    {
+        this.selectedElement = e;
+    }
+
+    handleSkillChange(e)
+    { // Cập nhật nội dung skill
+        this.selectedElement.skill = e.target.value;
+        console.log(e.target.value);
+    }
+
+    handleEdittingClick(index)
+    {   
+        console.log("editting");
+        this.props.onEdittingSkillTag(index);
+    }
+
+    // Khởi tạo data
 
     generateSkillTagsData(searchStr) {
         let { onLoadSkillTagsData } = this.props;
@@ -20,15 +46,46 @@ class SkillTag extends Component {
 
     generateContent() {
         let { returnData, status, message, loading } = this.props.SkillTagsReducer;
+
         let content = [];
-        console.log("data in comp")
-        console.log(returnData);
-        for (let e of returnData) {
-            content.push(<tr key={e.id_skill}>
-                <td>{e.id_skill}</td>
-                <td>{e.skill}</td>
-                <td>{e.skill_tag}</td>
-            </tr>);
+        for (let i = 0; i < returnData.length; i++) {
+            if(returnData[i].isEditting === 1)
+            {
+                content.push(                
+                    <tr key={returnData[i].id_skill} onClick={()=>{this.selectedChange(returnData[i])}}>
+                        <td>{returnData[i].id_skill}</td>
+                        <td>
+                            <input type="text" className="px-2 w-100" 
+                                    defaultValue={returnData[i].skill} onChange={this.handleSkillChange}/>
+                        </td>
+                        <td>
+                            <input type="text" className="px-2 w-100" defaultValue={returnData[i].skill_tag}/>
+                        </td>
+                        <td className="d-flex justify-content-around">
+                            <i className="fa fa-save text-dark cursor-pointer" onClick={()=>{this.handleEdittingClick(i)}}></i>
+                            <i className="fa fa-times text-dark cursor-pointer" onClick={()=>{this.handleEdittingClick(i)}}></i>
+                        </td>
+                    </tr>);
+            }
+            else
+            {
+                content.push(                
+                    <tr key={returnData[i].id_skill} onClick={()=>{this.selectedChange(returnData[i])}}>
+                        <td>{returnData[i].id_skill}</td>
+                        <td>
+                            <input type="text" className="px-2 w-100" disabled
+                                    defaultValue={returnData[i].skill}/>
+                        </td>
+                        <td>
+                            <input type="text" className="px-2 w-100" disabled
+                                    defaultValue={returnData[i].skill_tag}/>
+                        </td>
+                        <td className="d-flex justify-content-around">
+                            <i className="fa fa-pencil-alt text-dark cursor-pointer" onClick={()=>{this.handleEdittingClick(i)}}></i>
+                            <i className="fa fa-trash-alt text-dark cursor-pointer"></i>
+                        </td>
+                    </tr>);
+            }
         }
         return content;
     }
@@ -72,6 +129,7 @@ class SkillTag extends Component {
                                         <th>#</th>
                                         <th>Skill</th>
                                         <th>Tag</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -84,46 +142,6 @@ class SkillTag extends Component {
                     </div>
                 </div>
                 {/* End skill tag table */}
-
-
-                {/* Tutor table whom have skill which is chosen */}
-                <div className="card shadow mb-4">
-                    <div className="card-header py-3">
-                        <h6 className="m-0 font-weight-bold text-primary">Tutor: who have skill tag which is chosen</h6>
-                    </div>
-                    <div className="card-body">
-                        <div className="row my-1">
-                            <div className="col-9">
-                            </div>
-                            <div className="col-3 text-right">
-                                <div className="input-group mb-3">
-                                    <input type="text" className="form-control" placeholder="Search ..." />
-                                    <div className="input-group-append">
-                                        <button className="btn btn-outline-secondary" type="button">
-                                            <i className="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="table-responsive">
-                            <table className="col-12 table" id="dataTable" width="100%" cellSpacing={0} >
-                                <thead className="thead-dark">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Skill</th>
-                                        <th>Tag</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                {/* End tutor table whom have skill which is chosen */}
             </div>
         )
     }
