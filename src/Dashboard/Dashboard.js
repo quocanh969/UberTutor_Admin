@@ -163,6 +163,7 @@ export default class Dashboard extends Component {
                                             <a className="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                                         </div>
                                     </li>
+                                    
                                     <div className="topbar-divider d-none d-sm-block" />
                                     {/* Nav Item - User Information */}
                                     <li className="nav-item dropdown no-arrow">
