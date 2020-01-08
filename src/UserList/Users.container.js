@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom';
 import Users from './Users';
-import { LoadData } from './Users.action';
+import { LoadData, TurnOnOffStatus } from './Users.action';
 
 
 const mapStateToProps = (state) => {
@@ -12,6 +12,9 @@ const mapDispatchToProps = dispatch => {
     return {
         onLoadData:(id,queryOption)=>{
             dispatch(LoadData(id,queryOption));
+        },
+        onTurnStatus: (id, status, role, email)=>{
+            dispatch(TurnOnOffStatus(id, status, role, email));
         },
     }
 }

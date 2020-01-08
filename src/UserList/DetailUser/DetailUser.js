@@ -7,41 +7,52 @@ export default class DetailUser extends Component {
     constructor(props) {
         super(props);
         let { id, role } = this.props.match.params;
+        var temp;
         if (role === 0) { // learner
-            this.state = {
+            temp = {
+                role: Number.parseInt(role),
                 tab: 1,
                 user: {
+                    id: 1,
                     name: '',
-                    avatarLink: '',
-                    id: id,
-                    role: role,
+                    address: '',
                     email: '',
                     phone: '',
                     gender: 0,
+                    yob: null,
+                    avatarLink: '',
+                    isEditting: false,
                 },
             }
         }
         else { // tutor
-            this.state = {
+            temp = {
+                role: Number.parseInt(role),
                 tab: 1,
                 user: {
+                    id: 1,
                     name: '',
-                    avatarLink: '',
-                    id: id,
-                    role: role,
+                    address: '',
                     email: '',
                     phone: '',
                     gender: 0,
-                    major: 0,
+                    evaluation: 0,
+                    yob: null,
+                    avatarLink: '',
+                    isEditting: false,
+                    id_major: 0,
+                    major_name: '',
                     price: 0,
-                    levelTeaching: 0,
+                    level: '',
+                    areaCode: 0,
                     area: '',
-                    successRate: 0,
                     introduction: '',
+                    skills: [],
                 },
             }
         }
 
+        this.state = temp;
 
         this.initData(id, role);
     }
@@ -49,8 +60,13 @@ export default class DetailUser extends Component {
     initData(id, role) {
         us.loadUserDetail({ id: id, role: role })
             .then(res => {
-                console.log(res);
-                this.setState({ user: res.info.data });
+                if (this.state.role === 1) {
+                    this.setState({ user: res.info.data });
+                }
+                else {
+                    this.setState({ user: res.info.data[0] });
+                }
+                console.log(this.state.user);
             })
             .catch(error => {
                 console.log(error);
@@ -58,7 +74,7 @@ export default class DetailUser extends Component {
     }
 
     generateTutorTab(proInfoBtn) {
-        if (this.state.user.role === 1) {
+        if (this.state.role === 1) {
             return (
                 <li className="nav-item">
                     <div className={proInfoBtn} id="profile-tab" data-toggle="tab"
@@ -71,7 +87,7 @@ export default class DetailUser extends Component {
     }
 
     generateTutorContent(proInfoClass) {
-        if (this.state.user.role === 1) {
+        if (this.state.role === 1) {
             return (
                 <div className={proInfoClass} id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div className="row">
@@ -79,7 +95,7 @@ export default class DetailUser extends Component {
                             <label>Major</label>
                         </div>
                         <div className="col-9">
-                            <p>{this.state.user.major}</p>
+                            <p>{this.state.user.major_name}</p>
                         </div>
                     </div>
                     <div className="row">
@@ -87,7 +103,7 @@ export default class DetailUser extends Component {
                             <label>Hourly Rate</label>
                         </div>
                         <div className="col-9">
-                            <p>{this.state.user.price}$/hr</p>
+                            <p>$&nbsp;{this.state.user.price}/hr</p>
                         </div>
                     </div>
                     <div className="row">
@@ -95,7 +111,7 @@ export default class DetailUser extends Component {
                             <label>Level Teaching</label>
                         </div>
                         <div className="col-9">
-                            <p>{this.state.user.levelTeaching}</p>
+                            <p>{this.state.user.level}</p>
                         </div>
                     </div>
                     <div className="row">
@@ -104,14 +120,6 @@ export default class DetailUser extends Component {
                         </div>
                         <div className="col-9">
                             <p>{this.state.user.area}</p>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-3">
-                            <label>Success Rate</label>
-                        </div>
-                        <div className="col-9">
-                            <p>{this.state.user.successRate}%</p>
                         </div>
                     </div>
                     <div className="row">
@@ -128,25 +136,30 @@ export default class DetailUser extends Component {
         }
     }
 
-    generateTagBox() {
-        if(this.state.user.role === 1)
+    generateTag() {
+        let content = [];
+        for(let e of this.state.user.skills)
         {
+            content.push(
+                <span className="text-primary p-1" key={e.id_skill}><u>{e.skill_tag}</u>,</span>
+            );
+        }
+        return content;
+    }
+
+    generateTagBox() {
+        if (this.state.role === 1) {
             return (
                 <div className="profile-work rounded w-75 mt-0 mx-auto text-wrap">
                     <div className="text-center font-weight-bold">TAGs</div>
                     <hr />
-                    <span className="text-primary p-1"><u>English</u></span>,
-                    <span className="text-primary p-1"><u>Dynamic</u></span>,
-                    <span className="text-primary p-1"><u>Pedagogica</u></span>,
-                    <span className="text-primary p-1"><u>Algebra</u></span>,
-                    <span className="text-primary p-1"><u>Geometry</u></span>
+                    {this.generateTag()}
                 </div>
             );
         }
-        else
-        {
+        else {
             return null;
-        }        
+        }
     }
 
     render() {
@@ -154,8 +167,6 @@ export default class DetailUser extends Component {
         var proInfoClass = "";
         var accountInfoBtn = "";
         var proInfoBtn = "";
-        console.log('render:');
-        console.log(this.state.user);
         let ImgSrc = this.state.user.avatarLink;
         if (ImgSrc === null || ImgSrc === '') {
             ImgSrc = 'https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50a/p50x50/10645251_10150004552801937_4553731092814901385_n.jpg?_nc_cat=1&_nc_ohc=hnKkw-bKtIkAQlIhz4gzarCWd3tTja6CU5x12XZnI2YTuW9TiBuSlIBlQ&_nc_ht=scontent.xx&oh=64b6c755de54ecae67c9742219d23174&oe=5E7F1EA8';
@@ -186,16 +197,11 @@ export default class DetailUser extends Component {
             <div className="container emp-profile">
                 <form method="post">
                     <div className="row">
-                        <div className="col-md-4">
-                            <div className="profile-img">
-                                <img src={ImgSrc}
-                                    alt="avatar-user" />
-                                <input type="file" name="file" ref="imgInput" className="d-none" />
-                                <div className="file btn btn-lg btn-primary cursor-pointer"
-                                    onClick={() => { this.refs.imgInput.click() }}>
-                                    Change Photo
-                                </div>
+                        <div className="col-4">
+                            <div className="profile-img mb-5">
+                                <img src={ImgSrc} alt="avatar-user" />
                             </div>
+                            {this.generateTagBox()}
                         </div>
                         <div className="col-md-6">
                             <div className="profile-head">
@@ -206,7 +212,12 @@ export default class DetailUser extends Component {
                                     {RoleStr}
                                 </h6>
 
-                                <p className="proile-rating">EVALUATION : <span>8/10</span></p>
+                                {this.state.role === 1
+                                    ?
+                                    <p className="proile-rating">EVALUATION : <span>{this.state.user.evaluation}/10 <i className="fa fa-star text-warning"></i></span></p>
+                                    :
+                                    ''
+                                }
                                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                                     <li className="nav-item">
                                         <div className={accountInfoBtn} id="home-tab" data-toggle="tab"
@@ -217,58 +228,60 @@ export default class DetailUser extends Component {
                                     {this.generateTutorTab(proInfoBtn)}
                                 </ul>
                             </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-4">
-                            {this.generateTagBox()}
-                        </div>
-                        <div className="col-md-8">
-                            <div className="tab-content profile-tab" id="myTabContent">
-                                <div className={accountInfoClass} id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div className="row">
-                                        <div className="col-3">
-                                            <label>User Id</label>
-                                        </div>
-                                        <div className="col-9">
-                                            <p>{this.state.user.id}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-3">
-                                            <label>Name</label>
-                                        </div>
-                                        <div className="col-9">
-                                            <p>{this.state.user.name}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-3">
-                                            <label>Email</label>
-                                        </div>
-                                        <div className="col-9">
-                                            <p>{this.state.user.email}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-3">
-                                            <label>Phone</label>
-                                        </div>
-                                        <div className="col-9">
-                                            <p>{this.state.user.phone}</p>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-3">
-                                            <label>Gender</label>
-                                        </div>
-                                        <div className="col-9">
-                                            <p>{this.state.user.gender}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {this.generateTutorContent(proInfoClass)}
 
+                            <div>
+                                <div className="tab-content profile-tab" id="myTabContent">
+                                    <div className={accountInfoClass} id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div className="row">
+                                            <div className="col-3">
+                                                <label>User Id</label>
+                                            </div>
+                                            <div className="col-9">
+                                                <p>{this.state.user.id}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3">
+                                                <label>Name</label>
+                                            </div>
+                                            <div className="col-9">
+                                                <p>{this.state.user.name}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3">
+                                                <label>Email</label>
+                                            </div>
+                                            <div className="col-9">
+                                                <p>{this.state.user.email}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div className="col-9">
+                                                <p>{this.state.user.phone}</p>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-3">
+                                                <label>Gender</label>
+                                            </div>
+                                            <div className="col-9">                                                
+                                                <p>{
+                                                    this.state.user.gender === 1
+                                                    ?
+                                                    'Male'
+                                                    :
+                                                    'Female'
+                                                }</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {this.generateTutorContent(proInfoClass)}
+
+                                </div>
                             </div>
                         </div>
                     </div>

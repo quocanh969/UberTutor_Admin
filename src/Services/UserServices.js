@@ -8,6 +8,7 @@ export const us = {
     loadSkillTag,
     loadUserData,
     loadUserDetail,
+    turnOnOffStt,
 }
 
 
@@ -88,6 +89,23 @@ function loadUserDetail(option){
     return fetch(`${ApiUrl}/users/getDetailUser`, requestOption)
         .then(handleResponse);
 }
+
+
+function turnOnOffStt(id, status, email){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'PUT',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+        body: JSON.stringify({id: id, status: status, email: email}),
+    };
+
+    return fetch(`${ApiUrl}/users/changeAccountStatus`, requestOption)
+        .then(handleResponse);
+}
+
 
 function handleResponse(response) {
     return response.text().then(text => {

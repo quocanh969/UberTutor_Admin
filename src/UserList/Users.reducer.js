@@ -47,6 +47,39 @@ const UsersReducer = (state = initState, action) => {
                 message: action.message,
                 loading: false,
             };
+        case 'USER_TURN_STATUS':
+            if(action.role === 0)
+            {
+                let temp = state.userData;
+                for(let e of temp)
+                {
+                    if(e.id === action.id)
+                    {
+                        e.status = action.stt;
+                        break;
+                    }
+                }
+                return {
+                    ...state,
+                    userData: temp,
+                }
+            }
+            else
+            {
+                let temp = state.tutorData;
+                for(let e of temp)
+                {
+                    if(e.id === action.id)
+                    {
+                        e.status = action.stt;
+                        break;
+                    }
+                }
+                return {
+                    ...state,
+                    tutorData: temp,
+                }
+            }
         default:
             return state
     }

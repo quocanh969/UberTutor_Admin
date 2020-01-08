@@ -5,12 +5,20 @@ class Users extends Component {
 
     constructor(props) {
         super(props);
+
+
+
         this.generateUserData("");
         this.generateTutorData("");
     }
 
     detailClick(id, role) {
         history.push(`/dashboard/users/id=${id}&role=${role}`);
+    }
+
+    turnStatusClick(id, curStatus, role, email) {
+        let { onTurnStatus } = this.props;
+        onTurnStatus(id, curStatus, role, email);
     }
 
     addNewUser() {
@@ -45,6 +53,7 @@ class Users extends Component {
         let queryOption = {
             role: 0, // user
             searchStr,
+            page: 0,
         }
         onLoadData(JSON.parse(localStorage.getItem('user')).user.loginUser.id, queryOption);
     }
@@ -54,6 +63,7 @@ class Users extends Component {
         let queryOption = {
             role: 1, // tutor
             searchStr,
+            page: 0,
         }
         onLoadData(JSON.parse(localStorage.getItem('user')).user.loginUser.id, queryOption);
     }
@@ -61,16 +71,6 @@ class Users extends Component {
     generateUserList() {
         let { userData, status, message, loading } = this.props.UsersReducer;
         let content = [];
-        // if (loading === true) {
-        //     return (
-        //         <tr className="d-flex justify-content-center">
-        //             <td colSpan={4} className="spinner-border text-primary" role="status">
-        //                 <span className="sr-only">Loading...</span>
-        //             </td>
-        //         </tr>
-        //     );
-        // }
-        // else {
         for (let e of userData) {
             let imgSrc = e.avatarLink;
             if (imgSrc === "" || imgSrc === null) {
@@ -85,6 +85,14 @@ class Users extends Component {
                 <td>{e.name}</td>
                 <td>{e.email}</td>
                 <td>{e.phone}</td>
+                <td className="cursor-pointer" onClick={() => this.turnStatusClick(e.id,e.status,e.role, e.email)}>
+                    {e.status === 1
+                    ?
+                    <i className="fa fa-user text-success"></i>
+                    :
+                    <i className="fa fa-user-slash text-danger"></i>
+                    }                    
+                </td>
                 <td className="cursor-pointer" onClick={() => this.detailClick(e.id, e.role)}>
                     <i className="fa fa-angle-right"></i>
                 </td>
@@ -98,16 +106,6 @@ class Users extends Component {
     generateTutorList() {
         let { tutorData, status, message, loading } = this.props.UsersReducer;
         let content = [];
-        // if (loading === true) {
-        //     return (
-        //         <tr className="d-flex justify-content-center">
-        //             <td colSpan={4} className="spinner-border text-primary" role="status">
-        //                 <span className="sr-only">Loading...</span>
-        //             </td>
-        //         </tr>
-        //     );
-        // }
-        // else {
         for (let e of tutorData) {
             let imgSrc = e.avatarLink;
             if (imgSrc === "" || imgSrc === null) {
@@ -122,6 +120,14 @@ class Users extends Component {
                 <td>{e.name}</td>
                 <td>{e.email}</td>
                 <td>{e.phone}</td>
+                <td className="cursor-pointer" onClick={() => this.turnStatusClick(e.id,e.status,e.role, e.email)}>
+                    {e.status === 1
+                    ?
+                    <i className="fa fa-user text-success"></i>
+                    :
+                    <i className="fa fa-user-slash text-danger"></i>
+                    } 
+                </td>
                 <td className="cursor-pointer" onClick={() => this.detailClick(e.id, e.role)}>
                     <i className="fa fa-angle-right"></i>
                 </td>
@@ -149,9 +155,9 @@ class Users extends Component {
                     <div className="card-body">
                         <div className="row my-1">
                             <div className="col-9">
-                                <button type="button" className="btn btn-success">
+                                {/* <button type="button" className="btn btn-success">
                                     <i className="fa fa-plus"></i> | Add new
-                                </button>
+                                </button> */}
                             </div>
                             <div className="col-3 text-right">
                                 <div className="input-group mb-3">
@@ -179,6 +185,7 @@ class Users extends Component {
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -203,9 +210,9 @@ class Users extends Component {
                     <div className="card-body">
                         <div className="row my-1">
                             <div className="col-9">
-                                <button type="button" className="btn btn-success">
+                                {/* <button type="button" className="btn btn-success">
                                     <i className="fa fa-plus"></i> | Add new
-                                </button>
+                                </button> */}
                             </div>
                             <div className="col-3 text-right">
                                 <div className="input-group mb-3">
@@ -233,6 +240,7 @@ class Users extends Component {
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
+                                        <th>Status</th>
                                         <th></th>
                                     </tr>
                                 </thead>

@@ -47,3 +47,28 @@ export const LoadData = (id, queryOption) => {
         }
     }
 }
+
+export const TurnOnOffStatus = (id, status, role, email) => {
+    return dispatch => {
+        us.turnOnOffStt(id, !status, email)
+        .then(res=>{
+            console.log(res);
+            if(res.code === 1)
+            {
+                dispatch({
+                    type: 'USER_TURN_STATUS',
+                    id,
+                    role,
+                    stt: !status,
+                });
+            }
+            else
+            {
+                console.log(res.info.message);
+            }
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+}
