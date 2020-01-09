@@ -41,14 +41,13 @@ export default class Dashboard extends Component {
                             <div className="sidebar-brand-text mx-3">UBER TUTOR</div>
                         </NavLink>
                         {/* Divider */}
-                        <hr className="sidebar-divider my-0" />
-                        {/* Nav Item - Dashboard */}
+                        {/* <hr className="sidebar-divider my-0" />
                         <li className="nav-item">
                             <NavLink className="nav-link row" to="/dashboard">
                                 <i className="fas fa-fw fa-tachometer-alt mr-1 pl-4 col-2" />
                                 <span className="font-weight-700 col">Dashboard</span>
                             </NavLink>
-                        </li>
+                        </li> */}
                         {/* Divider */}
                         <hr className="sidebar-divider" />
                         <div className="sidebar-heading">
@@ -115,23 +114,10 @@ export default class Dashboard extends Component {
                                         </a>
                                         {/* Dropdown - User Information */}
                                         <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                            <a className="dropdown-item" href="#">
-                                                <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400" />
-                                                Profile
-                                            </a>
-                                            <a className="dropdown-item" href="#">
-                                                <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400" />
-                                                Settings
-                                            </a>
-                                            <a className="dropdown-item" href="#">
-                                                <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400" />
-                                                Activity Log
-                                            </a>
-                                            <div className="dropdown-divider" />
-                                            <a className="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                            <div className="dropdown-item cursor-pointer" onClick={()=>{localStorage.clear(); window.location.href = '/login'}}>
                                                 <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" />
                                                 Logout
-                                            </a>
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>
@@ -141,11 +127,11 @@ export default class Dashboard extends Component {
                                 <Route path="/dashboard/users" exact component={UsersContainer}></Route>
                                 <Route path={`/dashboard/users/id=:id&role=:role`} exact component={DetailUser}></Route>
                                 <Route path="/dashboard/skill-tags" exact component={SkillTagsContainer}></Route>
-                                <Route path="/dashboard" exact component={MainDashboard}></Route>
+                                {/* <Route path="/dashboard" exact component={MainDashboard}></Route> */}
                                 <Route path="/dashboard/contracts" exact component={Contracts}></Route>
                                 <Route path="/dashboard/complains" exact component={Complains}></Route>
                                 <Route path="/dashboard/statistic" exact component={Statistic}></Route>
-                                <Redirect to="/dashboard"></Redirect>
+                                <Redirect to="/dashboard/users"></Redirect>
                             </Switch>
                         </div>
                         <footer className="sticky-footer bg-white">

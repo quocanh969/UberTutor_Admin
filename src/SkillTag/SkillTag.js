@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import './SkillTag.css';
+import Popup from "reactjs-popup";
+import AddSkillTag from './AddSkillTag';
+import us from '../Services/UserServices';
 
 class SkillTag extends Component {
     //skillTagData = [];
     selectedElement = null;
     constructor(props) {
         super(props);
-        this.generateSkillTagsData("");
+        this.generateSkillTagsData("",0);
 
         this.handleSkillChange = this.handleSkillChange.bind(this);
     }
@@ -34,11 +37,37 @@ class SkillTag extends Component {
         this.props.onEdittingSkillTag(index);
     }
 
+    saveSkillTag(id)
+    {
+
+    }
+
+    deleteSkillTag(id)
+    {
+        us.deleteSkillTag(JSON.parse(localStorage.getItem('user')).user.loginUser.id, id)
+        .then(res=>{
+            if(res.code === 1)
+            {
+                this.generateSkillTagsData('',0);
+                alert('Remove skill tag successfully');
+            }
+            else
+            {
+                alert('Remove skill tag failed');
+            }
+        })
+        .catch(err=>{
+            alert('Remove skill tag successfully');
+        })
+    }
+
+
     // Khởi tạo data
 
-    generateSkillTagsData(searchStr) {
+    generateSkillTagsData(searchStr, page) {
         let { onLoadSkillTagsData } = this.props;
         let queryOption = {
+            page,
             searchStr,
         }
         onLoadSkillTagsData(JSON.parse(localStorage.getItem('user')).user.loginUser.id, queryOption);
@@ -82,7 +111,7 @@ class SkillTag extends Component {
                         </td>
                         <td className="d-flex justify-content-around">
                             <i className="fa fa-pencil-alt text-dark cursor-pointer" onClick={()=>{this.handleEdittingClick(i)}}></i>
-                            <i className="fa fa-trash-alt text-dark cursor-pointer"></i>
+                            <i className="fa fa-trash-alt text-dark cursor-pointer" onClick={()=>{this.deleteSkillTag(returnData[i].id_skill)}}></i>
                         </td>
                     </tr>);
             }
@@ -106,9 +135,16 @@ class SkillTag extends Component {
                     <div className="card-body">
                         <div className="row my-1">
                             <div className="col-9">
-                                <button type="button" className="btn btn-success">
-                                    <i className="fa fa-plus"></i> | Add new
-                                </button>
+                            <Popup trigger={
+                                        <div type="button" className="btn btn-success cursor-pointer">
+                                            <i className="fa fa-plus"></i> | Add new
+                                        </div>} 
+                                        modal>
+                                        {close => (
+                                            <AddSkillTag onClose={close}>
+                                            </AddSkillTag>
+                                        )}
+                                    </Popup>
                             </div>
                             <div className="col-3 text-right">
                                 <div className="input-group mb-3">

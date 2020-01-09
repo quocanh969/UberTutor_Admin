@@ -168,6 +168,39 @@ export default class Contracts extends Component {
         }
     }
 
+    stopContract(id, type) {
+        contractServ.stopContract(id)
+        .then(res=>{
+            if(res.code === 1)
+            {
+                this.loadContracts(0);
+                switch(type)
+                {
+                    case 1:
+                        this.loadPendingContracts(0);
+                        break;
+                    case 2:
+                        this.loadActiveContracts(0);
+                        break;
+                    case 3:
+                        this.loadExpiredContracts(0);
+                        break;
+                    case 4:
+                        this.loadHistoryContracts(0);
+                        break;
+                }
+                alert('End contract successfull');
+            }
+            else
+            {
+                alert('End contract failed');
+            }
+        })
+        .catch(err=>{
+            alert('End contract failed');
+        })
+    }
+
     generateContract() {
         let content = [];
         for (let e of this.state.constarcts) {
@@ -178,6 +211,7 @@ export default class Contracts extends Component {
                     <td>{e.EndDate}</td>
                     <td>{e.EstimatedEndDate}</td>
                     <td>$&nbsp;{e.totalPrice}</td>
+                    <td className='text-center'><i className="fa fa-times text-danger cursor-pointer" onClick={()=>{this.stopContract(e.id, 0)}}></i></td>
                 </tr>
             );
         }
@@ -194,6 +228,7 @@ export default class Contracts extends Component {
                     <td>{e.EndDate}</td>
                     <td>{e.EstimatedEndDate}</td>
                     <td>$&nbsp;{e.totalPrice}</td>
+                    <td className='text-center'><i className="fa fa-times text-danger cursor-pointer" onClick={()=>{this.stopContract(e.id,1)}}></i></td>
                 </tr>
             );
         }
@@ -210,6 +245,7 @@ export default class Contracts extends Component {
                     <td>{e.EndDate}</td>
                     <td>{e.EstimatedEndDate}</td>
                     <td>$&nbsp;{e.totalPrice}</td>
+                    <td className='text-center'><i className="fa fa-times text-danger cursor-pointer" onClick={()=>{this.stopContract(e.id, 2)}}></i></td>
                 </tr>
             );
         }
@@ -226,6 +262,7 @@ export default class Contracts extends Component {
                     <td>{e.EndDate}</td>
                     <td>{e.EstimatedEndDate}</td>
                     <td>$&nbsp;{e.totalPrice}</td>
+                    <td className='text-center'><i className="fa fa-times text-danger cursor-pointer" onClick={()=>{this.stopContract(e.id,3)}}></i></td>
                 </tr>
             );
         }
@@ -242,6 +279,7 @@ export default class Contracts extends Component {
                     <td>{e.EndDate}</td>
                     <td>{e.EstimatedEndDate}</td>
                     <td>$&nbsp;{e.totalPrice}</td>
+                    <td className='text-center'><i className="fa fa-times text-danger cursor-pointer" onClick={()=>{this.stopContract(e.id, 4)}}></i></td>
                 </tr>
             );
         }
@@ -328,11 +366,12 @@ export default class Contracts extends Component {
                             <table className="col-12 table" id="dataTable" width="100%" cellSpacing={0} >
                                 <thead className="thead-dark">
                                     <tr>
-                                        <th>#</th>
-                                        <th>Start</th>
-                                        <th>End</th>
-                                        <th>EstimatedEnd</th>
+                                        <th style={{width: 100}}>#</th>
+                                        <th style={{width: 150}}>Start</th>
+                                        <th style={{width: 150}}>End</th>
+                                        <th style={{width: 150}}>EstimatedEnd</th>
                                         <th>Bill</th>
+                                        <th style={{width: 125}}>End Contract</th>
                                     </tr>
                                 </thead>
                                 <tbody>

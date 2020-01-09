@@ -8,7 +8,16 @@ export const contractServ = {
     getExpiredContracts,
     getHistoryContracts,
     getComplainContracts,
+    getIncomeEachYear,
+    getStatisticByWeek,
+    getStatisticByMonth,
+    getStatisticByDate,
+    getTutorByIncomeFromLastNDays,
+    getTopMajorsByIncome,
+    getTopTutorsAllTime,
+    getTopMajorsAllTime,
     cancelContract,
+    stopContract,
     removeComplain,
 }
 
@@ -107,6 +116,21 @@ function cancelContract(id){
         .then(handleResponse);
 }
 
+function stopContract(id){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'PUT',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+        body: JSON.stringify({id_contract: id})
+    };
+
+    return fetch(`${ApiUrl}/users/stopContract`, requestOption)
+        .then(handleResponse);
+}
+
 function removeComplain(id){
     let token = JSON.parse(localStorage.getItem('user')).token;
     const requestOption = {
@@ -119,6 +143,124 @@ function removeComplain(id){
     };
 
     return fetch(`${ApiUrl}/users/removeComplain`, requestOption)
+        .then(handleResponse);
+}
+
+
+function getIncomeEachYear(){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+    };
+
+    return fetch(`${ApiUrl}/users/getIncomeEachYear`, requestOption)
+        .then(handleResponse);
+}
+
+function getStatisticByWeek(year){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+        body: JSON.stringify({year: year}),
+    };
+
+    return fetch(`${ApiUrl}/users/getStatisticByWeek`, requestOption)
+        .then(handleResponse);
+}
+
+function getStatisticByMonth(year, month){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+        body: JSON.stringify({year: year, month: month}),
+    };
+
+    return fetch(`${ApiUrl}/users/getStatisticByMonth`, requestOption)
+        .then(handleResponse);
+}
+
+function getStatisticByDate(date){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+        body: JSON.stringify({date: date}),
+    };
+
+    return fetch(`${ApiUrl}/users/getIncomeByDate`, requestOption)
+        .then(handleResponse);
+}
+
+function getTopTutorsAllTime(){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+    };
+
+    return fetch(`${ApiUrl}/users/getTopTutorsAllTime`, requestOption)
+        .then(handleResponse);
+}
+
+function getTutorByIncomeFromLastNDays(days){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+        body: JSON.stringify({days: days}),
+    };
+
+    return fetch(`${ApiUrl}/users/getTopTutorsByIncome`, requestOption)
+        .then(handleResponse);
+}
+
+function getTopMajorsAllTime(){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+    };
+
+    return fetch(`${ApiUrl}/users/getTopMajorsAllTime`, requestOption)
+        .then(handleResponse);
+}
+
+function getTopMajorsByIncome(days){
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+        body: JSON.stringify({days: days}),
+    };
+
+    return fetch(`${ApiUrl}/users/getTopMajorsByIncome`, requestOption)
         .then(handleResponse);
 }
 

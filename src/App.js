@@ -18,10 +18,10 @@ function App() {
     <div>
       <Router history={history}> 
         <Switch>
-          <Route path='/dashboard' component={DashboardContainer}></Route>
-          <Route path='/login' component={LoginContainer}></Route>
-          <Route path='/register' component={RegisterContainer}></Route>
-          <Redirect to='/login'></Redirect>
+          <PrivateRoute path='/dashboard' component={DashboardContainer}></PrivateRoute>
+          <LoginRoute path='/login' component={LoginContainer}></LoginRoute>
+          <LoginRoute path='/register' component={RegisterContainer}></LoginRoute>
+          <Redirect to='/dashboard'></Redirect>
         </Switch>
       </Router>
     </div>

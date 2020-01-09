@@ -148,9 +148,9 @@ class Register extends Component {
                                                     </button>
                                                 </form>
                                                 <hr />
-                                                <div className="text-center">
+                                                {/* <div className="text-center">
                                                     <a className="small" href="forgot-password.html">Forgot Password?</a>
-                                                </div>
+                                                </div> */}
                                                 <div className="text-center">
                                                     <NavLink className="small" to="/login">Already have an account? Login!</NavLink>
                                                 </div>

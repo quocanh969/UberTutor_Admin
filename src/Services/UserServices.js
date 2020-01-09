@@ -6,6 +6,8 @@ export const us = {
     register,
     loadUserData,
     loadSkillTag,
+    addSkillTag,
+    deleteSkillTag,
     loadUserData,
     loadUserDetail,
     turnOnOffStt,
@@ -74,6 +76,41 @@ function loadSkillTag(option)
     return fetch(`${ApiUrl}/users/getSkillList`, requestOption)
         .then(handleResponse);
 }
+
+
+
+function addSkillTag(id, skill, skill_tag)
+{
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+        body: JSON.stringify({id,skill, skill_tag,}),
+    };
+
+    return fetch(`${ApiUrl}/users/addSkill`, requestOption)
+        .then(handleResponse);
+}
+
+function deleteSkillTag(id, id_skill)
+{
+    let token = JSON.parse(localStorage.getItem('user')).token;
+    const requestOption = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+ token,
+        },
+        body: JSON.stringify({id,id_skill}),
+    };
+
+    return fetch(`${ApiUrl}/users/deleteSkill`, requestOption)
+        .then(handleResponse);
+}
+
 
 function loadUserDetail(option){
     let token = JSON.parse(localStorage.getItem('user')).token;
