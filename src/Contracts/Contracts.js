@@ -345,7 +345,7 @@ export default class Contracts extends Component {
                         <div className="my-1">
                             <ul className="nav nav-tabs">
                                 <li className="nav-item">
-                                    <div className={ContractBtn} onClick={() => { if (this.state.tab !== 1) this.setState({ tab: 1 }) }}>Pending</div>
+                                    <div className={ContractBtn} onClick={() => { if (this.state.tab !== 1) this.setState({ tab: 1 }) }}>All</div>
                                 </li>
                                 <li className="nav-item">
                                     <div className={PendingBtn} onClick={() => { if (this.state.tab !== 5) this.setState({ tab: 5 }) }}>Pending</div>
@@ -377,11 +377,11 @@ export default class Contracts extends Component {
                                 <tbody>
                                     {this.state.tab === 1
                                         ?this.generateContract()
-                                        : (this.state.tab === 2
+                                        : (this.state.tab === 5
                                             ?this.generatePendingContract()
-                                            : (this.state.tab === 3
+                                            : (this.state.tab === 2
                                                 ?this.generateActiveContract()
-                                                : (this.state.tab === 4
+                                                : (this.state.tab === 3
                                                     ?this.generateExpiredContract()
                                                     :this.generateHistoryContract()
                                                 )))}
