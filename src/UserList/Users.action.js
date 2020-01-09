@@ -1,6 +1,5 @@
 import { us } from '../Services/UserServices';
 import { history } from '../Helpers/History';
-import { delay } from 'q';
 
 export const LoadData = (id, queryOption) => {
     return dispatch => {
@@ -17,8 +16,7 @@ export const LoadData = (id, queryOption) => {
                     // Update token for local storage
                     let user = JSON.parse(localStorage.getItem('user'));
                     console.log(user);
-                    //user.token = infoRes.token;
-                    //localStorage.setItem('user', user);
+                    
 
                     dispatch(success(queryOption.role, infoRes.data));
                 },
@@ -52,7 +50,6 @@ export const TurnOnOffStatus = (id, status, role, email) => {
     return dispatch => {
         us.turnOnOffStt(id, !status, email)
         .then(res=>{
-            console.log(res);
             if(res.code === 1)
             {
                 dispatch({

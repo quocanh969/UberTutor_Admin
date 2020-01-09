@@ -76,7 +76,6 @@ class Users extends Component {
             if (imgSrc === "" || imgSrc === null) {
                 imgSrc = "https://scontent.xx.fbcdn.net/v/t1.0-1/c15.0.50.50a/p50x50/10645251_10150004552801937_4553731092814901385_n.jpg?_nc_cat=1&_nc_ohc=hnKkw-bKtIkAQlIhz4gzarCWd3tTja6CU5x12XZnI2YTuW9TiBuSlIBlQ&_nc_ht=scontent.xx&oh=64b6c755de54ecae67c9742219d23174&oe=5E7F1EA8";
             }
-
             content.push(<tr key={e.id}>
                 <td>{e.id}</td>
                 <td>
@@ -86,7 +85,7 @@ class Users extends Component {
                 <td>{e.email}</td>
                 <td>{e.phone}</td>
                 <td className="cursor-pointer" onClick={() => this.turnStatusClick(e.id,e.status,e.role, e.email)}>
-                    {e.status === 1
+                    {e.status === 1 || e.status === true
                     ?
                     <i className="fa fa-user text-success"></i>
                     :
@@ -121,7 +120,7 @@ class Users extends Component {
                 <td>{e.email}</td>
                 <td>{e.phone}</td>
                 <td className="cursor-pointer" onClick={() => this.turnStatusClick(e.id,e.status,e.role, e.email)}>
-                    {e.status === 1
+                    {e.status === 1 || e.status === true
                     ?
                     <i className="fa fa-user text-success"></i>
                     :

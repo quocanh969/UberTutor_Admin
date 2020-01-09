@@ -55,6 +55,7 @@ const UsersReducer = (state = initState, action) => {
                 {
                     if(e.id === action.id)
                     {
+                        console.log(e);
                         e.status = action.stt;
                         break;
                     }
