@@ -1,5 +1,5 @@
-const ApiUrl = "http://localhost:8080";
-
+//const ApiUrl = "http://localhost:8080";
+const ApiUrl = "https://ut-1612018-1612175-sv-admin.herokuapp.com";
 
 export const contractServ = {
     getContracts,
